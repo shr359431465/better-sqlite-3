@@ -2,7 +2,7 @@
   "name": "better-sqlite3",
   "version": "8.2.0",
   "description": "The fastest and simplest library for SQLite3 in Node.js.",
-  "homepage": "https://github.com/shr359431465/better-sqlite-3",
+  "homepage": "https://shr359431465.github.io/better-sqlite-3/",
   "author": "Joshua Wise <joshuathomaswise@gmail.com>",
   "repository": {
     "type": "git",
