@@ -123,7 +123,7 @@ jobs:
           # 将要部署资产的 GitHub 存储库（默认$GITHUB_REPOSITORY）
           repo: shr359431465/sqlite3
           # 部署到 gh-pages 分支
-          target_branch: master
+          target_branch: gh-pages
           # 部署目录为 VuePress 的默认输出目录
           build_dir: dist
         env:
