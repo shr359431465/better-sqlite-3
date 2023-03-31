@@ -22,7 +22,7 @@ jobs:
           # - macos-latest
           # - windows-2019
         node:
-          - 16
+          - 14
     name: Testing Node ${{ matrix.node }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     steps:
@@ -119,20 +119,20 @@ jobs:
       #     npm install --ignore-scripts && \
       #     npx --no-install prebuild -r node -t 16.0.0 --include-regex 'better_sqlite3.node$' -u ${{ secrets.ACCESS_TOKEN }}"
       - run: |
-          docker run --rm -v $(pwd):/tmp/project --entrypoint /bin/sh --platform linux/${{ matrix.arch }} node:16 -c "\
+          docker run --rm -v $(pwd):/tmp/project --entrypoint /bin/sh --platform linux/${{ matrix.arch }} node:14 -c "\
           cd /tmp/project && \
           npm install --ignore-scripts && \
-          npx --no-install prebuild -r electron@13.6.9 -t 16.0.0 --include-regex 'better_sqlite3.node$' --arch arm64 -u ${{ secrets.ACCESS_TOKEN }}"
+          npx --no-install prebuild -r electron@13.6.9 -t 14.0.0 --include-regex 'better_sqlite3.node$' --arch arm64 -u ${{ secrets.ACCESS_TOKEN }}"
 
-      # - name: Deploy to GitHub Pages
-      #   uses: crazy-max/ghaction-github-pages@v2
-      #   with:
-      #     # 将要部署资产的 GitHub 存储库（默认$GITHUB_REPOSITORY）
-      #     repo: shr359431465/sqlite3
-      #     # 部署到 gh-pages 分支
-      #     target_branch: gh-pages
-      #     # 部署目录为 VuePress 的默认输出目录
-      #     build_dir: dist
-      #   env:
-      #     # @see https://docs.github.com/cn/actions/reference/authentication-in-a-workflow#about-the-github_token-secret
-      #     GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+      - name: Deploy to GitHub Pages
+        uses: crazy-max/ghaction-github-pages@v2
+        with:
+          # 将要部署资产的 GitHub 存储库（默认$GITHUB_REPOSITORY）
+          repo: shr359431465/sqlite3
+          # 部署到 gh-pages 分支
+          target_branch: gh-pages
+          # 部署目录为 VuePress 的默认输出目录
+          build_dir: dist
+        env:
+          # @see https://docs.github.com/cn/actions/reference/authentication-in-a-workflow#about-the-github_token-secret
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
