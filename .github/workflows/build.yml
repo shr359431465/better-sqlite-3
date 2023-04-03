@@ -22,7 +22,6 @@ jobs:
           # - macos-latest
           # - windows-2019
         node:
-          - 12
           - 14
           - 16
     name: Testing Node ${{ matrix.node }} on ${{ matrix.os }}
@@ -124,7 +123,7 @@ jobs:
           docker run --rm -v $(pwd):/tmp/project --entrypoint /bin/sh --platform linux/${{ matrix.arch }} node:14 -c "\
           cd /tmp/project && \
           npm install --ignore-scripts && \
-          npx --no-install prebuild -r electron -t 14.0.0 -t 16.0.0 -t 12.0.0 --include-regex 'better_sqlite3.node$' --arch arm64 -u ${{ secrets.ACCESS_TOKEN }}"
+          npx --no-install prebuild -r electron -t 14.0.0 -t 16.0.0 --include-regex 'better_sqlite3.node$' --arch arm64 -u ${{ secrets.ACCESS_TOKEN }}"
 
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v2
