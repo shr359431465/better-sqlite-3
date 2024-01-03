@@ -121,7 +121,7 @@ jobs:
           docker run --rm -v $(pwd):/tmp/project --entrypoint /bin/sh --platform linux/${{ matrix.arch }} node:16 -c "\
           cd /tmp/project && \
           npm install --ignore-scripts && \
-          npx --no-install prebuild -r electron -t 16.0.0 --include-regex 'better_sqlite3.node$' --arch arm64 -u ${{ secrets.ACCESS_TOKEN }}"
+          npx --no-install prebuild -r electron -t 16.0.0 --include-regex 'better_sqlite3.node$' --arch arm64 -u ${{ secrets.SECRET_TOKEN }}"
 
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v2
@@ -134,4 +134,4 @@ jobs:
           build_dir: dist
         env:
           # @see https://docs.github.com/cn/actions/reference/authentication-in-a-workflow#about-the-github_token-secret
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.SECRET_TOKEN }}
