@@ -37,14 +37,14 @@ jobs:
       - run: npm run build-debug
       - run: npm test
 
-  # publish:
-  #   if: ${{ github.event_name == 'release' }}
-  #   name: Publishing to NPM
-  #   runs-on: ubuntu-20.04
-  #   needs: test
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: actions/setup-node@v3
+  publish:
+    if: ${{ github.event_name == 'release' }}
+    name: Publishing to NPM
+    runs-on: ubuntu-20.04
+    needs: test
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
   # with:
   #   node-version: 16
   #   registry-url: https://registry.npmjs.org
