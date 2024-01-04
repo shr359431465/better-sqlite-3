@@ -9,8 +9,12 @@ on:
       - master
   page_build:
   release:
-    types: [created]
+    types: [released]
   workflow_dispatch: {}
+
+env:
+  NODE_BUILD_CMD: npx --no-install prebuild -r node -t 16.0.0 --include-regex 'better_sqlite3.node$'
+  ELECTRON_BUILD_CMD: npx --no-install prebuild -r electron -t 18.0.0 --include-regex 'better_sqlite3.node$'
 
 jobs:
   test:
@@ -33,20 +37,20 @@ jobs:
       - run: npm run build-debug
       - run: npm test
 
-  publish:
-    if: ${{ github.event_name == 'release' }}
-    name: Publishing to NPM
-    runs-on: ubuntu-20.04
-    needs: test
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        # with:
-        #   node-version: 16
-        #   registry-url: https://registry.npmjs.org
-      # - run: npm publish
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+  # publish:
+  #   if: ${{ github.event_name == 'release' }}
+  #   name: Publishing to NPM
+  #   runs-on: ubuntu-20.04
+  #   needs: test
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-node@v3
+  # with:
+  #   node-version: 16
+  #   registry-url: https://registry.npmjs.org
+  # - run: npm publish
+  #   env:
+  #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   # prebuild:
   #   strategy:
@@ -139,15 +143,15 @@ jobs:
       #   env:
       #     GITHUB_TOKEN: ${{ secrets.SECRET_TOKEN }}
 
-      - name: Deploy to GitHub Pages
-        uses: crazy-max/ghaction-github-pages@v2
-        with:
-          # 将要部署资产的 GitHub 存储库（默认$GITHUB_REPOSITORY）
-          repo: shr359431465/better-sqlite-3
-          # 部署到 gh-pages 分支
-          target_branch: master
-          # 部署目录为 VuePress 的默认输出目录
-          # build_dir: dist
-        env:
-          # @see https://docs.github.com/cn/actions/reference/authentication-in-a-workflow#about-the-github_token-secret
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Deploy to GitHub Pages
+      #   uses: crazy-max/ghaction-github-pages@v2
+      #   with:
+      #     # 将要部署资产的 GitHub 存储库（默认$GITHUB_REPOSITORY）
+      #     repo: shr359431465/better-sqlite-3
+      #     # 部署到 gh-pages 分支
+      #     target_branch: gh-pages
+      #     # 部署目录为 VuePress 的默认输出目录
+      #     # build_dir: dist
+      #   env:
+      #     # @see https://docs.github.com/cn/actions/reference/authentication-in-a-workflow#about-the-github_token-secret
+      #     GITHUB_TOKEN: ${{ secrets.SECRET_TOKEN }}
