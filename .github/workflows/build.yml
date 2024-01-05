@@ -13,8 +13,8 @@ on:
   workflow_dispatch: {}
 
 env:
-  NODE_BUILD_CMD: npx --no-install prebuild -r node -t 16.0.0 --include-regex 'better_sqlite3.node$'
-  ELECTRON_BUILD_CMD: npx --no-install prebuild -r electron -t 18.0.0  --include-regex 'better_sqlite3.node$'
+  NODE_BUILD_CMD: npx --no-install prebuild -r node -t 21.0.0 --include-regex 'better_sqlite3.node$'
+  ELECTRON_BUILD_CMD: npx --no-install prebuild -r electron -t 23.0.0 -t 24.0.0 --include-regex 'better_sqlite3.node$'
 
 jobs:
   test:
@@ -23,7 +23,9 @@ jobs:
         os:
           - ubuntu-20.04
         node:
+          - 18
           - 20
+          - 21
     name: Testing Node ${{ matrix.node }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     steps:
@@ -31,28 +33,28 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
-      # - if: ${{ startsWith(matrix.os, 'windows') }}
-      #   run: pip.exe install setuptools
-      # - if: ${{ ! startsWith(matrix.os, 'windows') }}
-      #   run: python3 -m pip install setuptools
-      # - run: npm install --ignore-scripts
-      # - run: npm run build-debug
-      # - run: npm test
+      - if: ${{ startsWith(matrix.os, 'windows') }}
+        run: pip.exe install setuptools
+      - if: ${{ ! startsWith(matrix.os, 'windows') }}
+        run: python3 -m pip install setuptools
+      - run: npm install --ignore-scripts
+      - run: npm run build-debug
+      - run: npm test
 
   publish:
     if: ${{ github.event_name == 'release' }}
     name: Publishing to NPM
     runs-on: ubuntu-20.04
     needs: test
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-      #   with:
-      #     node-version: 16
-      #     registry-url: https://registry.npmjs.org
-      # - run: npm publish
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+    # steps:
+    #   - uses: actions/checkout@v4
+    #   - uses: actions/setup-node@v4
+    #     with:
+    #       node-version: 16
+    #       registry-url: https://registry.npmjs.org
+    #   - run: npm publish
+    #     env:
+    #       NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   prebuild:
     strategy:
