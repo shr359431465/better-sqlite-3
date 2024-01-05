@@ -54,26 +54,26 @@ jobs:
       #   env:
       #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-  # prebuild:
-  #   strategy:
-  #     matrix:
-  #       os:
-  #         - ubuntu-20.04
-  #   name: Prebuild on ${{ matrix.os }}
-  #   runs-on: ${{ matrix.os }}
-  #   needs: publish
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 16
-  #     - if: ${{ startsWith(matrix.os, 'windows') }}
-  #       run: pip.exe install setuptools
-  #     - if: ${{ ! startsWith(matrix.os, 'windows') }}
-  #       run: python3 -m pip install setuptools
-  #     - run: npm install --ignore-scripts
-  #     - run: ${{ env.NODE_BUILD_CMD }} -u ${{ secrets.GITHUB_TOKEN }}
-  #     - run: ${{ env.ELECTRON_BUILD_CMD }} -u ${{ secrets.GITHUB_TOKEN }}
+  prebuild:
+    strategy:
+      matrix:
+        os:
+          - ubuntu-20.04
+    name: Prebuild on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    needs: publish
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 16
+      - if: ${{ startsWith(matrix.os, 'windows') }}
+        run: pip.exe install setuptools
+      - if: ${{ ! startsWith(matrix.os, 'windows') }}
+        run: python3 -m pip install setuptools
+      - run: npm install --ignore-scripts
+      - run: ${{ env.NODE_BUILD_CMD }} -u ${{ secrets.ACTION_TOEKN }}
+      - run: ${{ env.ELECTRON_BUILD_CMD }} -u ${{ secrets.ACTION_TOEKN }}
 
   prebuild-linux-arm:
     strategy:
