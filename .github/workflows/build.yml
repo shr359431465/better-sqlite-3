@@ -13,8 +13,8 @@ on:
   workflow_dispatch: {}
 
 env:
-  NODE_BUILD_CMD: npx --no-install prebuild -r node -t 18.0.0 --include-regex 'better_sqlite3.node$'
-  ELECTRON_BUILD_CMD: npx --no-install prebuild -r electron -t 16.0.0  --include-regex 'better_sqlite3.node$'
+  NODE_BUILD_CMD: npx --no-install prebuild -r node -t 16.0.0 --include-regex 'better_sqlite3.node$'
+  ELECTRON_BUILD_CMD: npx --no-install prebuild -r electron -t 18.0.0  --include-regex 'better_sqlite3.node$'
 
 jobs:
   test:
@@ -79,7 +79,6 @@ jobs:
     strategy:
       matrix:
         arch:
-          - arm/v7
           - arm64
     name: Prebuild on Linux (${{ matrix.arch }})
     runs-on: ubuntu-latest
