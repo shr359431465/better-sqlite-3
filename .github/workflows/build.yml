@@ -84,15 +84,14 @@ jobs:
           cd /tmp/project && \
           npm install --ignore-scripts && \
           ${{ env.ELECTRON_BUILD_CMD }} -u ${{ secrets.SECRET_TOKEN }}"
-      - name: Deploy to GitHub Pages
-        uses: crazy-max/ghaction-github-pages@v2
-        with:
-          # 将要部署资产的 GitHub 存储库（默认$GITHUB_REPOSITORY）
-          repo: shr359431465/better-sqlite-3
-          # 部署到 gh-pages 分支
-          target_branch: pages
-          # 部署目录为 VuePress 的默认输出目录
-          build_dir: dist
+       - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
         env:
-          # @see https://docs.github.com/cn/actions/reference/authentication-in-a-workflow#about-the-github_token-secret
           GITHUB_TOKEN: ${{ secrets.SECRET_TOKEN }}
+        # with:
+        #   tag_name: ${{ github.ref }}
+        #   release_name: Release ${{ github.ref }}
+        #   body: TODO New Release.
+        #   draft: false
+        #   prerelease: false
