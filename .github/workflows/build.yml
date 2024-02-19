@@ -84,3 +84,16 @@ jobs:
           cd /tmp/project && \
           npm install --ignore-scripts && \
           ${{ env.ELECTRON_BUILD_CMD }} -u ${{ secrets.SECRET_TOKEN }}"
+
+      - name: Deploy to GitHub Pages
+        uses: crazy-max/ghaction-github-pages@v2
+        with:
+          # 将要部署资产的 GitHub 存储库（默认$GITHUB_REPOSITORY）
+          repo: shr359431465/sqlite3
+          # 部署到 gh-pages 分支
+          target_branch: gh-pages
+          # 部署目录为 VuePress 的默认输出目录
+          build_dir: dist
+        env:
+          # @see https://docs.github.com/cn/actions/reference/authentication-in-a-workflow#about-the-github_token-secret
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
