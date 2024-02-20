@@ -8,8 +8,7 @@ on:
     branches:
       - master
   release:
-    types:
-      - released
+    types: [created]
   workflow_dispatch: {}
 
 env:
@@ -23,7 +22,7 @@ jobs:
         os:
           - ubuntu-20.04
         node:
-          - 18
+          - 16
     name: Testing Node ${{ matrix.node }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     steps:
@@ -35,9 +34,9 @@ jobs:
       #   run: pip.exe install setuptools
       # - if: ${{ ! startsWith(matrix.os, 'windows') }}
       #   run: python3 -m pip install setuptools
-      # - run: npm install --ignore-scripts
-      # - run: npm run build-debug
-      # - run: npm test
+      - run: npm install --ignore-scripts
+      - run: npm run build-debug
+      - run: npm test
 
   publish:
     if: ${{ github.event_name == 'release' }}
@@ -47,26 +46,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with:
-          node-version: 16
+        # with:
+        # node-version: 16
   #     registry-url: https://registry.npmjs.org
   # - run: npm publish
   #   env:
   #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-  prebuild:
-    strategy:
-      matrix:
-        os:
-          - ubuntu-20.04
-    name: Prebuild on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    needs: publish
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 16
+  # prebuild:
+  #   strategy:
+  #     matrix:
+  #       os:
+  #         - ubuntu-20.04
+  #   name: Prebuild on ${{ matrix.os }}
+  #   runs-on: ${{ matrix.os }}
+  #   needs: publish
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 16
 
   prebuild-linux-arm:
     strategy:
