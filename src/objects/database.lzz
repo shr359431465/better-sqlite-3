@@ -290,7 +290,7 @@ private:
 		}
 
 		info.GetReturnValue().Set(
-			SAFE_NEW_BUFFER(isolate, reinterpret_cast<char*>(data), length, FreeSerialization, NULL).ToLocalChecked()
+			node::Buffer::New(isolate, reinterpret_cast<char*>(data), length, FreeSerialization, NULL).ToLocalChecked()
 		);
 	}
 
